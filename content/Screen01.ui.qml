@@ -30,7 +30,7 @@ Rectangle {
             selectorView.isTapEnabled = false
             showCardView.drawnCard = currentCard
             showCardView.currentWonCard = randomCard
-            if (showCardView.totalDrawnCards < 24)
+            if (showCardView.totalDrawnCards < 25)
                 showCardView.totalDrawnCards += 1
             else
                 showCardView.totalDrawnCards = 0

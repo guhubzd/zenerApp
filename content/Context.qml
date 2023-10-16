@@ -6,7 +6,7 @@ pragma Singleton
 
 
 QtObject {
-    property int cardCounts: 24
+    property int cardCounts: 25
 
     property int succeededDrawCounts: 0
 

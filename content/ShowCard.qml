@@ -38,10 +38,11 @@ Item {
         if(Context.cardCounts == 0) { //game ended
 
             console.log("game reset")
-            Context.cardCounts = 24
+            Context.cardCounts = 25
             Context.currentRandomNumber = 0
             Context.succeededDrawCounts = 0
-            item.state = "resetCardView"
+            item.state= "rotatedNoWin"
+            closeCurrentCardTimerInNoWin.start()
 
         } else {
            Context.currentRandomNumber = currentWonCard
