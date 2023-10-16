@@ -94,7 +94,7 @@ Item {
 
 
             ImageParticle {
-                source: "assets/autumn_leaf.png"
+                source: "assets/flower.png"
                 colorVariation: 1.0
             }
 
