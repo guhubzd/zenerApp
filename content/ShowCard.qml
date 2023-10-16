@@ -66,7 +66,7 @@ Item {
 
     Timer {
         id: closeCurrentCardTimer
-           interval: 3400; running: false; repeat: false
+           interval: 5800; running: false; repeat: false
            onTriggered: item.state = "resetCardView"
        }
 
@@ -94,7 +94,7 @@ Item {
 
 
             ImageParticle {
-                source: "assets/snow.png"
+                source: "assets/autumn_leaf.png"
                 colorVariation: 1.0
             }
 

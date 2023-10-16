@@ -49,6 +49,7 @@ Rectangle {
            onTapped: {
                console.log("Tapped");
                card.requestRandomness();
+               //getRandomArbitrary()
            }
 
        }
@@ -77,6 +78,16 @@ BrightnessContrast {
        contrast: 0.5
    }
 
+function getRandomInt(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min) + min); // The maximum is exclusive and the minimum is inclusive
+}
+
+function getRandomArbitrary() {
+      card.randomnessCalled(getRandomInt(1, 5), card.cardId)
+
+}
     function requestRandomness() {
 
     console.log("hey???????????????????????????????????????")
@@ -93,15 +104,13 @@ BrightnessContrast {
            } else if(xhr.readyState === XMLHttpRequest.DONE) {
                console.log("done???????????????????????????????????????")
                print('DONE')
-               //const response = JSON.parse(xhr.responseText.toString())
-               // Set JS object as model for listview
 
                let rspnse =  xhr.responseText.toString()
                console.log(rspnse);
                 let randomResult =parseInt(rspnse)
 
                 card.randomnessCalled(randomResult, card.cardId)
-               //console.log(rspnse);
+
 
 
            }
