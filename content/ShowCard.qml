@@ -10,49 +10,75 @@ Item {
      anchors.fill: parent
 
      property int currentWonCard: 0
-     property int drawnCard: 0
 
+
+     property int drawnCard: 0
+     property int totalDrawnCards: 0
+
+    onTotalDrawnCardsChanged: {
+
+        Context.cardCounts -= 1
+
+        if (currentWonCard == 1)
+        randomCard.color = "#db1111"
+        else if (currentWonCard == 2)
+            randomCard.color = "#fc774f"
+        else if (currentWonCard == 3)
+            randomCard.color = "#faff01"
+        else if (currentWonCard == 4)
+            randomCard.color = "#0c8e04"
+        if (currentWonCard == 5)
+            randomCard.color = "#456df3"
+
+
+        console.log("inside state change" )
+        console.log(currentWonCard)
+        console.log(drawnCard)
+
+        if(Context.cardCounts == 0) { //game ended
+
+            console.log("game reset")
+            Context.cardCounts = 24
+            Context.currentRandomNumber = 0
+            Context.succeededDrawCounts = 0
+            item.state = "resetCardView"
+
+        } else {
+           Context.currentRandomNumber = currentWonCard
+        if (currentWonCard == drawnCard){
+            console.log("won card")
+
+            Context.succeededDrawCounts += 1
+            item.state= "rotatedWin"
+            closeCurrentCardTimer.start()
+
+
+        } else {
+            console.log("no win")
+             item.state= "rotatedNoWin"
+             closeCurrentCardTimerInNoWin.start()
+        }
+      }
+
+    }
+
+
+    Timer {
+        id: closeCurrentCardTimer
+           interval: 3400; running: false; repeat: false
+           onTriggered: item.state = "resetCardView"
+       }
+
+    Timer {
+        id: closeCurrentCardTimerInNoWin
+           interval: 1200; running: false; repeat: false
+           onTriggered: item.state = "resetCardView"
+       }
 
 
      onCurrentWonCardChanged: {
 
 
-         Context.cardCounts -= 1
-
-         if (currentWonCard == 1)
-         randomCard.color = "red"
-         else if (currentWonCard == 2)
-             randomCard.color = "orange"
-         else if (currentWonCard == 3)
-             randomCard.color = "yellow"
-         else if (currentWonCard == 4)
-                     randomCard.color = "green"
-         if (currentWonCard == 5)
-                     randomCard.color = "blue"
-
-
-        console.log("inside state change" )
-
-         console.log(currentWonCard)
-         console.log(drawnCard)
-
-         if(Context.cardCounts == 0) { //game ended
-
-             Context.cardCounts = 24
-             Context.currentRandomNumber = 0
-             Context.succeededDrawCounts = 0
-             item.state = "resetCardView"
-
-         } else {
-            Context.currentRandomNumber = currentWonCard
-         if (currentWonCard == drawnCard){
-
-             Context.succeededDrawCounts += 1
-             item.state= "rotatedWin"
-         } else {
-              item.state= "rotatedNoWin"
-         }
-       }
      }
 
 
@@ -194,20 +220,7 @@ GridLayout {
         }
 
 
-        Timer {
-            id: closeCurrentCardTimer
-               interval: 2500; running: false; repeat: false
-               onTriggered: item.state = "resetCardView"
-           }
 
-
-     Connections {
-                    target: card
-                    onRandomnessCalled: {
-             item.state ="rotatedWin"
-            closeCurrentCardTimer.start()
-                }
-          }
 
         states: [ State {
                  name: "rotatedWin"
@@ -232,13 +245,14 @@ GridLayout {
                              PropertyChanges { target: randomCard; opacity: 1}
                              PropertyChanges {
                                  target: particleSystem;
-                                 visible: true
+                                 visible: false
 
                              }
                              PropertyChanges { target: wonCardsText; opacity: 0}
                              PropertyChanges { target: wonCardsText; visible: false}
                              PropertyChanges { target: totalCardsText; visible: true}
                              PropertyChanges { target: totalCardsText; opacity: 1}
+
                          },
             State {
               name: "resetParticleSystem"
@@ -256,6 +270,11 @@ GridLayout {
                 PropertyChanges { target: wonCardsText; visible: false}
                 PropertyChanges { target: totalCardsText; visible: true}
                 PropertyChanges { target: totalCardsText; opacity: 1}
+                PropertyChanges {
+                  target: particleSystem;
+                  visible: false
+                }
+
             }
         ]
 

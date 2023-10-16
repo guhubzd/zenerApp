@@ -30,6 +30,11 @@ Rectangle {
             selectorView.isTapEnabled = false
             showCardView.drawnCard = currentCard
             showCardView.currentWonCard = randomCard
+            if (showCardView.totalDrawnCards < 24)
+                showCardView.totalDrawnCards += 1
+            else
+                showCardView.totalDrawnCards = 0
+
             enableSelectorView.start()
         }
     }
